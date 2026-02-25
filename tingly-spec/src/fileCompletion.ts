@@ -39,14 +39,7 @@ export class FileCompletion {
     // Get files (with caching)
     let files = this.fileCache.get(workspaceFolder.uri.fsPath);
     if (!files) {
-      files = await vscode.workspace.findFiles(
-        '**/*',
-        '**/node_modules/**',
-        this.MAX_FILES
-      );
-      if (!token.isCancellationRequested) {
-        this.fileCache.set(workspaceFolder.uri.fsPath, files);
-      }
+      files = await this.fileCache.refresh(workspaceFolder);
     }
 
     if (token.isCancellationRequested) {

@@ -14,10 +14,11 @@ export class VibelyCompletionProvider implements vscode.CompletionItemProvider {
   private fileCompletion: FileCompletion;
   private symbolCompletion: SymbolCompletion;
   private symbolCache: SymbolCache;
+  private fileCache: FileCache;
 
   constructor() {
-    const fileCache = new FileCache();
-    this.fileCompletion = new FileCompletion(fileCache);
+    this.fileCache = new FileCache();
+    this.fileCompletion = new FileCompletion(this.fileCache);
     this.symbolCache = new SymbolCache();
     this.symbolCompletion = new SymbolCompletion(this.symbolCache);
 
@@ -41,15 +42,18 @@ export class VibelyCompletionProvider implements vscode.CompletionItemProvider {
   private async preloadWorkspace(): Promise<void> {
     const token = new vscode.CancellationTokenSource().token;
 
-    // 1. Preload file list (this triggers workspace scan)
     const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
-    if (workspaceFolder) {
-      vscode.workspace.findFiles('**/*', '**/node_modules/**', 1000).then(() => {
-        // File list is now cached in FileCache
-      });
+    if (!workspaceFolder) {
+      return;
     }
 
-    // 2. Preload symbols for recently opened files (warming up LSP)
+    // 1. Initialize file cache with .gitignore patterns
+    await this.fileCache.initialize(workspaceFolder);
+
+    // 2. Preload file list (triggers workspace scan with proper excludes)
+    this.fileCache.refresh(workspaceFolder);
+
+    // 3. Preload symbols for recently opened files (warming up LSP)
     const uris = vscode.workspace.textDocuments.map(doc => doc.uri);
     const toPreload = uris.slice(0, 10);
 
