@@ -9,6 +9,18 @@
 
 When invoked without arguments, it will guide you through creating a wireframe. When provided with a design context, it will create or refine wireframes.
 
+## Output
+
+Save all wireframes to: `./docs/pencil/{YYYY-MM-DD}-{name}.md`
+
+- **{YYYY-MM-DD}**: Current date in ISO format (e.g., 2024-03-07)
+- **{name}**: Descriptive kebab-case name based on the design (e.g., `login-page`, `user-dashboard`, `checkout-flow`)
+
+Example output paths:
+- `./docs/pencil/2024-03-07-login-page.md`
+- `./docs/pencil/2024-03-07-mobile-nav.md`
+- `./docs/pencil/2024-03-07-settings-panel.md`
+
 ## Guideline
 
 ### Wireframe Communication Style
