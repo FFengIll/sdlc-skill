@@ -12,6 +12,7 @@ This directory contains the foundational skills that support the SDLC workflow. 
 | **cache** | Architecture knowledge caching | [cache.md](./cache.md) |
 | **archive** | Archive old documentation | [archive.md](./archive.md) |
 | **git** | Git operations assistance | [git.md](./git.md) |
+| **git-resolve** | Git conflict resolution | [git-resolve.md](./git-resolve.md) |
 | **handoff** | Subagent delegation with context | [handoff.md](./handoff.md) |
 
 ## Usage
@@ -25,6 +26,7 @@ Foundation skills are available as standalone commands:
 /cache [scope] [action]
 /archive [scope] [pattern]
 /git [action] [options]
+/git-resolve [strategy]
 /handoff [task] [options]
 ```
 
@@ -34,7 +36,7 @@ These foundation skills are designed to work seamlessly with the SDLC workflow:
 
 - **During research**: Use `/cache` to read architecture knowledge
 - **During spec**: Use `/pencil` to create wireframes, `/doc` to generate API docs
-- **During coding**: Use `/git` for branch management and commits, `/handoff` for code analysis
+- **During coding**: Use `/git` for branch management, `/git-resolve` for conflict resolution, `/handoff` for code analysis
 - **During any phase**: Use `/doc` to update documentation
 - **For delegation**: Use `/handoff` to delegate complex tasks with full context
 
@@ -56,8 +58,9 @@ skills/foundation/
 ├── doc.md              # Documentation skill
 ├── pencil.md           # Wireframe design skill
 ├── cache.md            # Architecture caching skill
-├── archive.md        # Archive skill
+├── archive.md          # Archive skill
 ├── git.md              # Git operations skill
+├── git-resolve.md      # Git conflict resolution skill
 └── handoff.md          # Subagent delegation skill
 ```
 
@@ -69,6 +72,7 @@ Foundation skills may depend on each other:
 - **pencil** depends on: doc, cache
 - **cache** depends on: doc, git
 - **git** depends on: cache, doc
+- **git-resolve** depends on: git
 - **handoff** depends on: cache, Agent, sdlc state
 
 ## Version

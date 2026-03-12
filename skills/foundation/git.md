@@ -14,8 +14,7 @@ The `/git` skill assists with Git operations for SDLC workflows including status
 - `log` - Show commit history
 - `branch` - Branch management operations
 - `checkout` - Checkout branches or commits
-- `commit` - Commit message generation and best practices
-- `merge` - Merge and conflict resolution
+- `merge` - Merge operations (see `/git-resolve` for conflicts)
 - `clean` - Working directory cleanup
 - `workflow` - Git workflow helpers (feature, bugfix, hotfix)
 
@@ -25,7 +24,6 @@ The `/git` skill assists with Git operations for SDLC workflows including status
 - `/git log --oneline -10` - Show last 10 commits
 - `/git branch create feature/user-auth` - Create feature branch
 - `/git checkout main` - Switch to main branch
-- `/git commit` - Generate commit message from changes
 - `/git workflow start feature/add-oauth` - Start feature workflow
 
 ## Guidelines
@@ -34,9 +32,8 @@ The `/git` skill assists with Git operations for SDLC workflows including status
 - **Before Starting Work**: Check status and pull latest changes
 - **Branch Creation**: Create properly named branches for work
 - **Code Review**: Check diff and prepare for PR creation
-- **Commit Messages**: Generate consistent, descriptive commit messages
-- **Before Merging**: Check branch status and conflicts
-- **Conflict Resolution**: Get help resolving merge conflicts
+- **Before Merging**: Check branch status
+- **Conflict Resolution**: Use `/git-resolve` for merge conflict assistance
 - **Workflow Management**: Follow Git flow or GitHub flow conventions
 - **History Review**: Check commit history and changes
 
@@ -127,77 +124,11 @@ Display branches with:
 2. Checkout target branch
 3. Pull latest changes
 4. Merge source branch
-5. Handle conflicts if any
+5. If conflicts occur, use `/git-resolve` for assistance
 6. Create merge commit
 7. Push to remote
 
-#### Resolve Conflicts
-```
-/git merge resolve
-```
-
-**Assistance:**
-- List conflicted files
-- Show conflict markers
-- Suggest resolution strategies
-- Verify resolution completion
-
-### Commit Operations
-
-#### Generate Commit Message
-```
-/git commit generate
-```
-
-Analyze staged changes and generate commit message following:
-
-**Format:**
-```
-<type>(<scope>): <subject>
-
-<body>
-
-<footer>
-```
-
-**Types:**
-- `feat`: New feature
-- `fix`: Bug fix
-- `docs`: Documentation changes
-- `style`: Code style changes (formatting, etc.)
-- `refactor`: Code refactoring
-- `test`: Test additions or changes
-- `chore`: Maintenance tasks
-- `perf`: Performance improvements
-
-**Example:**
-```
-feat(auth): add OAuth2 Google authentication
-
-Implement Google OAuth2 authentication flow using Passport.js.
-Users can now sign in with their Google accounts.
-
-- Add Google OAuth2 strategy
-- Create callback handler
-- Update user model to store OAuth data
-- Add UI button for Google sign-in
-
-Closes #123
-```
-
-#### Smart Commit
-```
-/git commit smart [message]
-```
-
-**Process:**
-1. Check what files changed
-2. Stage appropriate files
-3. Generate or use provided commit message
-4. Create commit
-5. Show commit summary
-
-### Workflow Helpers
+### Branch Management
 
 #### Start Feature Workflow
 ```
@@ -348,7 +279,8 @@ Closes #123
 1. **Pull before merging**: Always get latest changes
 2. **Review before merging**: Check diff and potential issues
 3. **Test after merging**: Run tests to verify merge
-4. **Communicate**: Notify team of merge conflicts
+4. **Resolve conflicts**: Use `/git-resolve` for conflict resolution assistance
+5. **Communicate**: Notify team of significant changes
 
 ### Workflow Tips
 1. **Feature branches**: Use for new features and enhancements
@@ -384,14 +316,14 @@ git push origin feature/add-oauth
 
 # 2. Fix the bug
 
-# 3. Commit fix
-/git commit smart
+# 3. Commit fix (use /commit for proper commit handling)
+/commit "bugfix: fix login crash on timeout"
 
 # 4. Push and create PR
 git push origin bugfix/login-crash
 
-# 5. Merge after approval
-/git merge execute bugfix/login-crash
+# 5. If merge conflicts occur during merge
+/git-resolve interactive
 ```
 
 ### Hotfix Workflow
@@ -402,13 +334,13 @@ git push origin bugfix/login-crash
 # 2. Fix security issue
 
 # 3. Commit and push
-/git commit smart
+/commit "hotfix: patch security vulnerability"
 git push origin hotfix/security-patch
 
-# 4. Merge to main and develop
-/git merge execute hotfix/security-patch main
-git checkout develop
-/git merge execute hotfix/security-patch develop
+# 4. Merge to main (resolve conflicts if needed)
+git checkout main
+git merge hotfix/security-patch
+# If conflicts: /git-resolve
 ```
 
 ## Dependencies
