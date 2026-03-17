@@ -29,21 +29,28 @@ Software Development Lifecycle management with intelligent intent detection.
 
 ## Intent Detection
 
-| Your Request | Detected Action |
-|--------------|----------------|
-| "understand the codebase" | `/sdlc understand` |
-| "write a spec for auth" | `/sdlc spec` |
-| "implement login" | `/sdlc coding` |
-| "run tests" | `/sdlc test` |
-| "fix the login bug" | bugfix workflow |
-| "add user API" | feature workflow |
+| Your Request | Detected Action | Creates Files? |
+|--------------|----------------|----------------|
+| "understand the codebase" | `/sdlc understand` | ✅ Yes (arch cache) |
+| "explore payment module" | Quick explore (no skill) | ❌ No |
+| "how does auth work?" | Quick explain (no skill) | ❌ No |
+| "write a spec for auth" | `/sdlc spec` | ✅ Yes |
+| "implement login" | `/sdlc coding` | ✅ Yes |
+| "run tests" | `/sdlc test` | ❌ No |
+| "review my changes" | `/sdlc cr` | ✅ Yes (review report) |
+| "check for bugs" | `/sdlc cr` | ✅ Yes (review report) |
+| "fix the login bug" | bugfix workflow | ✅ Yes |
+| "add user API" | feature workflow | ✅ Yes |
+
+> **Note**: "explore" and "how does" questions are answered directly without creating files. Use "understand" to build reusable architecture cache.
 | "修复登录bug" | bugfix workflow (中文) |
 
 ## Commands
 
 | Command | Description |
 |---------|-------------|
-| `/sdlc understand` | Build context, create architecture cache |
+| `/sdlc understand` | Build context, explore codebase, discuss architecture |
+| `/sdlc cr [scope]` | Code review - find issues, check quality (staged/files/folders) |
 | `/sdlc spec [name]` | Write specification |
 | `/sdlc coding [desc]` | Write code based on spec |
 | `/sdlc test [type]` | Run tests (lint + unit + e2e) |
@@ -76,6 +83,12 @@ Software Development Lifecycle management with intelligent intent detection.
 # Understanding
 /sdlc understand the codebase
 /sdlc explore the payment module
+/sdlc how does the auth system work
+
+# Code Review (find issues)
+/sdlc review my changes
+/sdlc check for bugs in src/auth
+/sdlc audit the payment code for security issues
 
 # Specification
 /sdlc write a spec for user authentication
@@ -148,7 +161,9 @@ When `/sdlc` is invoked with arbitrary input:
    - Refactor: `refactor|clean up|restructure|重构`
 
 3. **Analyze for phase-level intents**
-   - Understand: `understand|explore|how does|explain|architecture|codebase|了解|理解|探索`
+   - Understand (creates architecture cache): `understand|analyze architecture|map codebase|build context|create arch cache`
+   - Explore/Read (lightweight, no cache): `explore|show me|how does|explain|walk through|what is|read code`
+   - Review/CR (finds issues): `review|check|audit|assess|inspect|find issues|find problems|look for bugs|审查|检查`
    - Spec: `spec|specification|document requirements|write spec|规范|规格|文档`
    - Research: `research|investigate|compare|best practices|研究|调研|比较`
    - Coding: `implement|code|write|build|create|develop|实现|编写|开发`
@@ -191,6 +206,7 @@ else:
 
 When routing to a specific phase, invoke:
 - `/sdlc understand` → read `skills/phases/understand.md`
+- `/sdlc cr` → read `skills/phases/cr.md`
 - `/sdlc spec` → read `skills/phases/spec.md`
 - `/sdlc coding` → read `skills/phases/coding.md`
 - `/sdlc test` → read `skills/phases/test.md`
@@ -202,6 +218,29 @@ When routing to a workflow, invoke:
 - feature → read `skills/workflows/feature.md`
 - refactor → read `skills/workflows/refactor.md`
 - research → read `skills/workflows/research.md`
+
+## Skill Behavior Summary
+
+| Skill | Creates Files | Purpose |
+|-------|--------------|---------|
+| `understand` | ✅ Yes (`docs/arch/`, `docs/understand/`) | Architecture cache, reusable documentation |
+| `cr` | ✅ Yes (`docs/cr/`) | Code review report with findings |
+| `explore/read` | ❌ No | Quick inspection, no artifacts |
+
+### When to use which
+
+- **User says "explore/show me/how does/explain/walk through"** → Just read and explain, **do not** invoke understand skill
+  - This is a lightweight conversation, no artifacts needed
+  - Just use Read/Glob tools and explain
+
+- **User says "understand/analyze architecture/map codebase/build context"** → Invoke `/sdlc understand`
+  - Creates architecture cache in `docs/arch/`
+  - Generates understanding report in `docs/understand/`
+  - For reuse across multiple tasks
+
+- **User says "review/check/audit/assess/find issues"** → Invoke `/sdlc cr`
+  - Creates code review report in `docs/cr/`
+  - Finds bugs, security issues, quality problems
 
 ## Context Extraction
 
