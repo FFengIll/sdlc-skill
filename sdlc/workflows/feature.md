@@ -18,7 +18,7 @@ Use this workflow when:
 START
   │
   ▼
-understand → research → spec → coding → test → verify → secure → cr → commit → pr → MERGE
+understand → research → spec → coding → test → validate → secure → cr → commit → pr → MERGE
 ```
 
 **First Two Steps are Non-Negotiable:**
@@ -80,17 +80,17 @@ understand → research → spec → coding → test → verify → secure → c
 
 **Question answered**: "Can the code run?"
 
-### 5. Verify
+### 5. Validate
 ```bash
-/sdlc verify
+/sdlc validate [target] [criteria]
 ```
 **What it checks:**
-- Requirements coverage
-- API contract matching
-- Data structure correctness
-- Business logic completeness
+- Harness-based validation (invariants, flows, constraints)
+- Goal-based validation (user goals achievable)
+- Active testing of behavior
+- Dependency chain verification
 
-**Question answered**: "Did we build the right thing?"
+**Question answered**: "Does it work correctly?"
 
 ### 6. Secure
 ```bash
@@ -157,8 +157,8 @@ understand → research → spec → coding → test → verify → secure → c
 # Step 5: Run tests after coding
 /sdlc test
 
-# Step 6: Verify implementation matches spec
-/sdlc verify
+# Step 6: Validate implementation
+/sdlc validate auth "authentication-invariants"
 
 # Step 7: Security check
 /sdlc secure
@@ -211,7 +211,7 @@ understand → research → spec → coding → test → verify → secure → c
 - [ ] Spec approved
 - [ ] Code implemented (only after spec is complete)
 - [ ] All tests passing
-- [ ] Spec requirements verified
+- [ ] Harness/goals validated
 - [ ] Security scan clean
 - [ ] Code review approved
 - [ ] Committed with proper message

@@ -52,14 +52,15 @@ Software Development Lifecycle management with intelligent intent detection.
 | `/sdlc understand`       | Build context, explore codebase, discuss architecture           |
 | `/sdlc cr [scope]`       | Code review - find issues, check quality (staged/files/folders) |
 | `/sdlc spec [name]`      | Write specification                                             |
+| `/sdlc harness [scope]`  | Write verification harness (invariants, flows, constraints)      |
 | `/sdlc coding [desc]`    | Write code based on spec                                        |
 | `/sdlc test [type]`      | Run tests (lint + unit + e2e)                                   |
-| `/sdlc verify [spec]`    | Check vs spec                                                   |
+| `/sdlc validate [target]`| Validate against harness or user goal                            |
 | `/sdlc commit [msg]`     | Commit changes                                                  |
 | `/sdlc pr [action]`      | Create/manage PR                                                |
 | `/sdlc debug [issue]`    | Debug bugs                                                      |
 | `/sdlc research [topic]` | Research solutions                                              |
-| `/sdlc resume`           | Browse and resume recent work from `.sdlc/docs/`        |
+| `/sdlc resume`           | Browse and resume recent work from `.sdlc/docs/`                |
 
 ## Workflows
 
@@ -120,12 +121,13 @@ Software Development Lifecycle management with intelligent intent detection.
 ├── state.json             # Workflow state
 └── docs/                  # All SDLC documentation
     ├── spec/              # Specifications
+    ├── harness/           # Verification harnesses (invariants, flows)
+    ├── validate/          # Validation reports (active testing results)
     ├── research/          # Research documents
     ├── arch/              # Architecture cache
     ├── understand/        # Understanding reports
     ├── pencil/            # Wireframes and designs
     ├── cr/                # Code review reports
-    ├── verify/            # Verification reports
     ├── test/              # Test reports
     ├── secure/            # Security reports
     ├── debug/             # Debug reports
@@ -162,7 +164,7 @@ Software Development Lifecycle management with intelligent intent detection.
 When `/sdlc` is invoked with arbitrary input:
 
 1. **Check for explicit commands first**
-   - If input matches `understand|spec|coding|test|verify|commit|pr|debug|research|cr|secure`
+   - If input matches `understand|spec|harness|coding|test|validate|commit|pr|debug|research|cr|secure`
    - Execute the corresponding phase skill directly
 
 2. **Analyze for workflow-level intents**
@@ -218,8 +220,10 @@ When routing to a specific phase, invoke:
 - `/sdlc understand` → read `skills/phases/understand.md`
 - `/sdlc cr` → read `skills/phases/cr.md`
 - `/sdlc spec` → read `skills/phases/spec.md`
+- `/sdlc harness` → read `skills/phases/harness.md`
 - `/sdlc coding` → read `skills/phases/coding.md`
 - `/sdlc test` → read `skills/phases/test.md`
+- `/sdlc validate` → read `skills/phases/validate.md`
 - `/sdlc commit` → read `skills/phases/commit.md`
 - `/sdlc pr` → read `skills/phases/pr.md`
 
@@ -294,9 +298,10 @@ The SDLC system is composed of the following skills organized under `sdlc/`:
 | `/understand` | Build architecture cache and explore codebase | `phases/understand.md` |
 | `/cr`         | Code review - find issues and check quality   | `phases/cr.md`         |
 | `/spec`       | Write specifications                          | `phases/spec.md`       |
+| `/harness`    | Write verification harnesses (invariants)     | `phases/harness.md`    |
 | `/coding`     | Write code based on specs                     | `phases/coding.md`     |
 | `/test`       | Run tests (lint + unit + e2e)                 | `phases/test.md`       |
-| `/verify`     | Check implementation vs spec                  | `phases/verify.md`     |
+| `/validate`   | Validate against harness/goal (active testing)| `phases/validate.md`   |
 | `/commit`     | Commit changes                                | `phases/commit.md`     |
 | `/pr`         | Create and manage pull requests               | `phases/pr.md`         |
 | `/debug`      | Debug and fix bugs                            | `phases/debug.md`      |

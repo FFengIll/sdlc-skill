@@ -18,7 +18,7 @@ Use this workflow when:
 START
   │
   ▼
-understand → debug → coding → test → verify → secure → commit → pr → MERGE
+understand → debug → coding → test → validate → secure → commit → pr → MERGE
 ```
 
 **First Step is Non-Negotiable:**
@@ -70,15 +70,15 @@ understand → debug → coding → test → verify → secure → commit → pr
 
 **Question answered**: "Does the fix work?"
 
-### 4. Verify
+### 4. Validate
 ```bash
-/sdlc verify
+/sdlc validate [target] [criteria]
 ```
 **What it checks:**
-- Bug is actually fixed
+- Bug is actually fixed (active testing)
 - No regressions introduced
 - Edge cases covered
-- Fix matches issue description
+- Related harness invariants still hold
 
 **Question answered**: "Is the bug truly resolved?"
 
@@ -138,8 +138,8 @@ understand → debug → coding → test → verify → secure → commit → pr
 # Step 4: Run tests
 /sdlc test
 
-# Step 5: Verify fix
-/sdlc verify
+# Step 5: Validate fix
+/sdlc validate auth "Session timeout fixed"
 
 # Step 6: Security check
 /sdlc secure
@@ -218,7 +218,7 @@ Fix:
 - [ ] Fix implemented
 - [ ] Regression tests added
 - [ ] All tests passing
-- [ ] Bug verified fixed
+- [ ] Bug validated fixed
 - [ ] No regressions
 - [ ] Security scan clean
 - [ ] Committed with issue reference
@@ -231,7 +231,7 @@ Fix:
 | **Start with** | understand → research → spec | **understand → debug** |
 | **Spec phase** | Full specification required | Brief bug/fix documentation |
 | **Coding approach** | Extensive new code | Minimal targeted changes |
-| **Verification** | Full spec compliance | Regression focused |
+| **Verification** | Full spec compliance | Regression focused (validate) |
 | **Code review** | CR during implementation | CR after fix is complete |
 
 ## Notes

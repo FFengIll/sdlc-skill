@@ -19,7 +19,7 @@ Use this workflow when:
 START
   │
   ▼
-understand → cr → spec → coding → test → verify → secure → cr → commit → pr → MERGE
+understand → cr → spec → coding → test → validate → secure → cr → commit → pr → MERGE
 ```
 
 **First Step is Non-Negotiable:**
@@ -82,15 +82,15 @@ understand → cr → spec → coding → test → verify → secure → cr → 
 
 **Critical**: Ensure no behavior changes
 
-### 5. Verify
+### 5. Validate
 ```bash
-/sdlc verify
+/sdlc validate [target] [criteria]
 ```
 **What it checks:**
-- Behavior preserved
+- Behavior preserved (active testing)
 - No breaking changes (unless intentional)
 - Performance improvements verified
-- New structure matches spec
+- Related harness invariants still hold
 
 **Question answered**: "Is functionality unchanged?"
 
@@ -161,8 +161,8 @@ understand → cr → spec → coding → test → verify → secure → cr → 
 # Step 5: Run tests
 /sdlc test
 
-# Step 6: Verify behavior unchanged
-/sdlc verify
+# Step 6: Validate behavior unchanged
+/sdlc validate auth "Behavior preserved after refactoring"
 
 # Step 7: Security check
 /sdlc secure
@@ -275,4 +275,4 @@ understand → cr → spec → coding → test → verify → secure → cr → 
 - Consider feature flags for large refactors
 - May need deprecation period for breaking changes
 - Use `/doc`, `/pencil`, `/cache` for documentation
-- Always verify performance doesn't regress
+- Always validate performance doesn't regress
