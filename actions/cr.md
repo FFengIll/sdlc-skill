@@ -97,15 +97,15 @@ Deep dive into a specific concern.
 
 ### Issues Found (N issues)
 
-[1] 🚨 Issue description - [file:line](file#line)
+[1] 🚨 Issue description - file:line
      - Impact: [description]
      - Suggestion: [specific fix]
 
-[2] ⚠️ Issue description - [file:line](file#line)
+[2] ⚠️ Issue description - file:line
      - Impact: [description]
      - Suggestion: [specific fix]
 
-[3] 💡 Suggestion - [file:line](file#line)
+[3] 💡 Suggestion - file:line
      - Suggestion: [specific improvement]
 
 ### ✅ Strengths
@@ -144,7 +144,7 @@ Deep dive into a specific concern.
 ### Output Requirements
 - Use severity levels (🚨/⚠️/💡)
 - Number issues for easy reference [1], [2], [3]...
-- Include clickable file links [file:line](file#line)
+- Include file links in plain text format (e.g., `internal/server/openai_chat.go:270`)
 - Be specific and actionable
 
 ## Completion Conditions
