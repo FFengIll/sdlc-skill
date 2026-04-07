@@ -40,6 +40,7 @@ Software Development Lifecycle management with intelligent intent detection and 
 | `/sdlc test [type]` | Run tests | `actions:test` |
 | `/sdlc commit [msg]` | Commit changes | `actions:commit` |
 | `/sdlc pr [action]` | Create/manage PR | `actions:pr` |
+| `/sdlc simplify [scope]` | Simplify changed code | `actions:simplify` |
 | `/sdlc debug [issue]` | Debug bugs | `actions:debug` |
 | `/sdlc discuss [topic]` | Technical discussion | `actions:discuss` |
 | `/sdlc handoff [task]` | Delegate to subagent | `actions:handoff` |
@@ -98,7 +99,7 @@ When `/sdlc` receives input:
 
 1. **Check explicit commands first**
    ```
-   guard|understand|cr|spec|harness|coding|test|validate|commit|pr|debug|research|secure|discuss|handoff|feedback|status|resume
+   guard|understand|cr|spec|harness|coding|test|validate|commit|pr|debug|research|secure|discuss|handoff|feedback|status|resume|simplify
    ```
    → Execute corresponding skill directly
 
@@ -117,6 +118,7 @@ When `/sdlc` receives input:
    - Test: `test|run tests|测试`
    - Commit: `commit|save changes|提交`
    - PR: `pull request|pr|提交pr`
+   - Simplify: `simplify|clean up code|简化`
 
 4. **Flow control (natural language)**
    - Continue: `continue|next|proceed|继续|下一步`
@@ -142,6 +144,7 @@ When `/sdlc` receives input:
 /sdlc secure    → actions:secure
 /sdlc discuss   → actions:discuss
 /sdlc handoff   → actions:handoff
+/sdlc simplify  → actions:simplify
 /sdlc feedback  → feedback
 ```
 
