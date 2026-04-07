@@ -97,6 +97,11 @@ After collecting responses:
 
 ### 4. Skill Update
 
+**IMPORTANT: Read `~/.sdlc/config.json` to get `sdlc.root`, then construct directory paths:**
+- **Changelog dir**: `{sdlc.root}/.sdlc.feedback/changelog/`
+- **Backup dir**: `{sdlc.root}/.sdlc.feedback/changelog/backup/`
+- **Feedback docs**: `{sdlc.root}/.sdlc.feedback/docs/`
+
 **CRITICAL: Only update global commands in `~/.claude/commands/`**
 
 This skill ONLY edits global commands located at:
@@ -110,10 +115,12 @@ If user approves updates:
    - If NOT in global commands → inform user, provide feedback only (no auto-edit)
    - Always display **absolute paths** to avoid confusion
 
-2. **Backup current version**: Copy to global feedback directory
+2. **Backup current version**: Copy to feedback directory
    ```bash
-   mkdir -p ~/.sdlc.feedback/changelog/backup
-   cp ~/.claude/commands/feedback.md ~/.sdlc.feedback/changelog/backup/feedback-v1.0.0-20260326.md.bak
+   # Read sdlc.root from ~/.sdlc/config.json
+   # Backup to: {sdlc.root}/.sdlc.feedback/changelog/backup/
+   mkdir -p {sdlc.root}/.sdlc.feedback/changelog/backup
+   cp ~/.claude/commands/feedback.md {sdlc.root}/.sdlc.feedback/changelog/backup/feedback-v1.0.0-20260326.md.bak
    ```
 
 3. **Update skill file**: Use `Edit` tool on global command
@@ -124,29 +131,29 @@ If user approves updates:
 4. **Increment version**: Update version at bottom of skill file
    - Example: `v1.0.0` → `v1.1.0`
 
-5. **Create changelog**: Write to global feedback directory
+5. **Create changelog**: Write to feedback directory
    ```
-   ~/.sdlc.feedback/changelog/feedback-v1.1.0-20260326.changelog.md
+   {sdlc.root}/.sdlc.feedback/changelog/feedback-v1.1.0-20260326.changelog.md
    ```
 
 **Example Paths (Always Absolute):**
 ```
 Source:    /Users/username/.claude/commands/feedback.md
-Backup:    /Users/username/.sdlc.feedback/changelog/backup/feedback-v1.0.0-20260326.md.bak
-Changelog: /Users/username/.sdlc.feedback/changelog/feedback-v1.1.0-20260326.changelog.md
+Backup:    {sdlc.root}/.sdlc.feedback/changelog/backup/feedback-v1.0.0-20260326.md.bak
+Changelog: {sdlc.root}/.sdlc.feedback/changelog/feedback-v1.1.0-20260326.changelog.md
 ```
 
 **Recovery:**
 ```bash
-# Restore from backup
-cp ~/.sdlc.feedback/changelog/backup/feedback-v1.0.0-20260326.md.bak ~/.claude/commands/feedback.md
+# Restore from backup (paths from ~/.sdlc/config.json sdlc.root)
+cp {sdlc.root}/.sdlc.feedback/changelog/backup/feedback-v1.0.0-20260326.md.bak ~/.claude/commands/feedback.md
 ```
 
 ## Output Structure
 
 ### Feedback Session Document
 
-Save to: `~/.sdlc.feedback/docs/feedback-[skill-name]-[date].feedback.md`
+Save to: `{sdlc.root}/.sdlc.feedback/docs/feedback-[skill-name]-[date].feedback.md`
 
 **Format:**
 ```markdown
@@ -168,14 +175,14 @@ Save to: `~/.sdlc.feedback/docs/feedback-[skill-name]-[date].feedback.md`
 
 ## Status
 - [x] User approved
-- [x] Backup: `~/.sdlc.feedback/changelog/backup/feedback-v1.0.0-20260326.md.bak`
+- [x] Backup: `{sdlc.root}/.sdlc.feedback/changelog/backup/feedback-v1.0.0-20260326.md.bak`
 - [x] Updated: `/Users/username/.claude/commands/feedback.md` v1.0.0 → v1.1.0
-- [x] Changelog: `~/.sdlc.feedback/changelog/feedback-v1.1.0-20260326.changelog.md`
+- [x] Changelog: `{sdlc.root}/.sdlc.feedback/changelog/feedback-v1.1.0-20260326.changelog.md`
 ```
 
 ### Changelog Document
 
-Save to: `~/.sdlc.feedback/changelog/[skill-name]-[version]-[date].changelog.md`
+Save to: `{sdlc.root}/.sdlc.feedback/changelog/[skill-name]-[version]-[date].changelog.md`
 
 **Format:**
 ```markdown
@@ -245,10 +252,10 @@ Apply these changes to `/Users/username/.claude/commands/discuss.md`?
 ```
 
 **If approved**:
-- Backs up to `~/.sdlc.feedback/changelog/backup/discuss-v1.0.0-20260326.md.bak`
+- Backs up to `{sdlc.root}/.sdlc.feedback/changelog/backup/discuss-v1.0.0-20260326.md.bak`
 - Updates `/Users/username/.claude/commands/discuss.md` → v1.1.0
-- Creates `~/.sdlc.feedback/changelog/discuss-v1.1.0-20260326.changelog.md`
-- Saves `~/.sdlc.feedback/docs/feedback-discuss-20260326.feedback.md`
+- Creates `{sdlc.root}/.sdlc.feedback/changelog/discuss-v1.1.0-20260326.changelog.md`
+- Saves `{sdlc.root}/.sdlc.feedback/docs/feedback-discuss-20260326.feedback.md`
 
 ## When to Use
 
