@@ -29,10 +29,16 @@ Creates detailed technical specification documents based on research findings an
    - Write the spec along with your understanding and design decisions
    - Keep specs key-focused and guiding-oriented
    - Pay attention to model definitions and file/module/function abstractions
+   - **IMPORTANT**: After creating file, display the path to user:
+     ```
+     ✅ Spec file created: `.sdlc/docs/recording-impl-20260407.spec.md`
+     ```
 
 4. **Output the Design**
    - After writing the spec, present the design to the user
+   - **Always include file path in output** for easy reference
    - Use `askUserQuestion` tool to communicate with the user
+   - **Include file path in AskUserQuestion options/descriptions** when relevant
    - Use `pencil` skill to show design in text-based graph if helpful
 
 ## Architecture Cache
@@ -111,6 +117,9 @@ Include:
 - You can use `askUserQuestion` to communicate with the user or let them choose
 - You can use `pencil` skill to show design in text-based graph
 - DO NOT make spec documents too long and verbose; keep them key-focused
+- **ALWAYS display the file path after creating/updating the spec document**
+- **Include file path in AskUserQuestion when asking user to review or approve**
+- Format: `✅ Spec file: `.sdlc/docs/category-feature-date.spec.md``
 
 ## Examples
 
@@ -142,3 +151,7 @@ The spec phase translates research findings and architecture understanding into 
 - **pencil.md** - Create diagrams for specifications
 - **research.md** - Previous phase: provides foundation
 - **coding.md** - Next phase: implements based on spec
+
+---
+
+**Version**: 1.1.0 | **Updated**: 2026-04-07
