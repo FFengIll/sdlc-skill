@@ -257,16 +257,6 @@ Provider management was scattered across 4 separate commands with inconsistent U
 - Cleaned up terminal output formatting
 ```
 
-## State Integration
-
-- **Updates**: `sdlc.phase` = `pr`
-- **Creates**: PR log in `.sdlc/docs/*.pr.md` (SDLC only)
-- **Reads**: `state.json` for `pr.base_branch`, `pr.remote`, and `pr.auto_push`
-
-**Auto-Push Behavior**:
-- `auto_push: false` (default) - Returns PR information to user, does not push
-- `auto_push: true` - Automatically executes `gh pr create`
-
 ## Related Skills
 
 - `/commit` - Commits must exist before creating PR
@@ -275,4 +265,4 @@ Provider management was scattered across 4 separate commands with inconsistent U
 
 ---
 
-**Version**: 1.4.0 | **Updated**: 2026-04-08
+**Version**: 1.5.0 | **Updated**: 2026-04-08
