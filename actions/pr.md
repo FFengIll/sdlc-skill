@@ -10,36 +10,8 @@ Generate pull request content that explains **why** the change exists and **what
 /pr [base-branch] [--fetch]
 ```
 
-| Priority | Method | Example |
-|----------|--------|---------|
-| 1 (highest) | Command arg | `/pr develop`, `/pr main` |
-| 2 | state.json `pr.base_branch` | `"main"` (local ref) |
-| 3 (lowest) | Auto-detect | `git merge-base` finds `main` or `master` |
-
 **Flags**:
 - `--fetch` — Fetch base branch from remote before diffing (default: local-only)
-
-### Configuration (state.json)
-
-```json
-{
-  "pr": {
-    "base_branch": "main",
-    "remote": "origin",
-    "auto_push": false
-  }
-}
-```
-
-| Setting | Type | Default | Description |
-|---------|------|---------|-------------|
-| `base_branch` | string | `main` | Target branch (local ref, e.g. `main`, `develop`) |
-| `remote` | string | `origin` | Git remote (used for `--fetch` and `auto_push`) |
-| `auto_push` | boolean | `false` | Automatically create PR via `gh pr create` |
-
-**Behavior**:
-- **`auto_push: false`** (default) - Return PR title, description, and command to user. User decides when to push.
-- **`auto_push: true`** - Automatically execute `gh pr create` with generated content.
 
 ## What Makes a Good PR?
 
@@ -74,26 +46,41 @@ Fix authentication timeout that caused users to be logged out after 5 minutes of
 
 ### 1. Resolve Base & Diff
 
-**Use `/utils:branch` for intelligent branch context detection:**
+**MANDATORY: Resolve base branch before running any git commands.**
 
+Follow this priority order and STOP at the first match:
+
+#### Priority 1 — Command arg
+If user provided a base (e.g. `/pr develop`), use it directly. Skip detection.
+
+#### Priority 2 — Interactive branch selection (REQUIRED when no arg)
+
+Run this command to get recent branches with upstream tracking info:
+```bash
+git branch -vv --sort=-committerdate | head -10
 ```
-"Analyze git state to detect current branch and base branch using merge-base analysis and branch patterns"
-```
 
-If HIGH/MEDIUM confidence, use detected base. If LOW, ask user to specify.
+This shows each branch with its upstream (e.g. `[origin/main: ahead 2]`), helping identify the right base.
 
-**By default, use local refs only (no `git fetch`).** This ensures the diff reflects exactly what's on disk, including unpushed commits.
+Then use `AskUserQuestion` to present the top branches as options for the user to select the base. Include `main`/`develop` if not already in the list.
+
+**When building options**, include the upstream info in the description if available:
+- Label: `main`
+- Description: `[origin/main] upstream branch` or `no upstream` if not tracked
+
+**Optionally deduplicate**: If multiple branches point to the same commit hash, group them as one option (e.g. label `main` with note "same as origin/main").
+
+Once user selects, proceed immediately — no confidence analysis needed.
+
+---
+
+**After base is confirmed**, run the diff (local refs only by default):
 
 ```bash
-# Step 1: Resolve base branch (in priority order)
-# 1. Command arg: /pr develop → base = "refs/heads/develop"
-# 2. state.json pr.base_branch: "main" → base = "refs/heads/main"
-# 3. Use /utils:branch detection (merge-base + pattern analysis)
+# Verify base exists locally
+git rev-parse refs/heads/<base> || { echo "Base '<base>' not found locally. Run /pr --fetch or specify branch."; exit 1; }
 
-# Step 2: Verify base exists locally, abort with clear error if not
-git rev-parse refs/heads/<base> || { echo "Base branch '<base>' not found locally. Use /pr --fetch or create it."; exit 1; }
-
-# Step 3: Diff against local base
+# Diff against confirmed base
 git log <base>..HEAD --oneline        # Commits unique to this branch
 git diff <base>..HEAD --stat          # File overview
 git diff <base>..HEAD                 # Full diff
@@ -104,7 +91,7 @@ BASE_COMMIT=$(git rev-parse origin/<base>)
 git diff $BASE_COMMIT..HEAD --stat
 ```
 
-**Important**: When resolving the base, strip any `origin/` prefix from user input or config. The base should always resolve to a local ref (`refs/heads/main`), not a remote tracking ref (`origin/main`).
+**Important**: Strip any `origin/` prefix from input. Base must resolve to a local ref (`refs/heads/main`), not a remote tracking ref (`origin/main`).
 
 ### 2. Understand the Change
 
@@ -265,4 +252,4 @@ Provider management was scattered across 4 separate commands with inconsistent U
 
 ---
 
-**Version**: 1.5.0 | **Updated**: 2026-04-08
+**Version**: 1.8.0 | **Updated**: 2026-04-09
