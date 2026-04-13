@@ -4,6 +4,7 @@ My prompt for ai coding with intent, harness and feedback
 
 # Install
 
+## Plugin / Skill
 ```
 # For claude 
 claude plugin marketplace add ffengill/sdlc
@@ -15,6 +16,17 @@ claude plugin install sdlc@sdlc-marketplace
 
 # use
 /sdlc your command  
+```
+
+## Command
+```
+# For claude 
+git clone https://github.com/FFengIll/sdlc.git
+
+# /sdlc:sdlc
+cp -R sdlc ~/.claude/commands/
+# or flatten /sdlc
+cp -R sdlc/* ~/.claude/commands/
 ```
 
 # Overview
@@ -126,59 +138,6 @@ claude plugin install sdlc@sdlc-marketplace
   变化常在。
 
 ---
-
-## File structure
-
-```
-vibely/
-├── actions/                        # SDLC action definitions (slash commands)
-│   ├── coding.md                   # /coding - Coding phase
-│   ├── commit.md                   # /commit - Commit phase
-│   ├── cr.md                       # /cr - Code review phase
-│   ├── debug.md                    # /debug - Debugging phase
-│   ├── discuss.md                  # /discuss - Discussion
-│   ├── guard.md                    # /guard - Guard/validation
-│   ├── handoff.md                  # /handoff - Handoff procedures
-│   ├── harness.md                  # /harness - Harness integration
-│   ├── pr.md                       # /pr - Pull request
-│   ├── regression.md               # /regression - Regression testing
-│   ├── research.md                 # /research - Research phase
-│   ├── secure.md                   # /secure - Security phase
-│   ├── simplify.md                 # /simplify - Code simplification
-│   ├── spec.md                     # /spec - Specification phase
-│   ├── test.md                     # /test - Testing phase
-│   ├── understand.md               # /understand - Understanding/analysis
-│   └── validate.md                 # /validate - Validation phase
-├── commands/                       # Extended commands and utilities
-│   ├── codeclean.md                # /codeclean - Code cleaning
-│   ├── discuss.md                  # Discussion documentation
-│   └── new-command.md              # /new-command - Create new commands
-├── flow/                           # Flow control and state management
-│   ├── resume.md                   # /sdlc resume - Resume workflow
-│   └── status.md                   # /sdlc status - Status tracking
-├── resource/                       # Resource files
-│   └── showcase-oauth.png          # OAuth showcase image
-├── utils/                          # Utility skills and tools
-│   ├── README.md                   # Utilities overview
-│   ├── archive.md                  # Archive utility
-│   ├── branch.md                   # Branch detection utility
-│   ├── cache.md                    # Cache utility
-│   ├── doc.md                      # Documentation utility
-│   ├── git-resolve.md              # Git conflict resolution
-│   └── git.md                      # Git utility
-│   └── pencil.md                   # Pencil framework utility
-├── workflows/                      # Workflow definitions
-│   ├── bugfix.md                   # Bug fix workflow
-│   ├── feature.md                  # Feature development workflow
-│   ├── minor.md                    # Minor changes workflow
-│   ├── refactor.md                 # Refactoring workflow
-│   └── research.md                 # Research workflow
-├── .gitignore                      # Git ignore rules
-├── AGENTS.md                       # Agents documentation
-├── README.md                       # This file
-├── feedback.md                     # Feedback skill
-└── sdlc.md                         # SDLC main documentation
-```
 
 ## Harness Showcase
 
