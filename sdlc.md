@@ -25,7 +25,6 @@ Software Development Lifecycle management with intelligent intent detection and 
 | actions:understand | understand | understand, analyze architecture, build context |
 | actions:cr         | cr         | review, check, audit, find issues, 检查         |
 | actions:spec       | spec       | spec, specification, write spec, 规范           |
-| actions:coding     | coding     | implement, code, write, build, 实现             |
 | actions:test       | test       | test, run tests, 测试                           |
 | actions:commit     | commit     | commit, save changes, 提交                      |
 | actions:pr         | pr         | pull request, 提交pr                            |
@@ -45,10 +44,10 @@ Software Development Lifecycle management with intelligent intent detection and 
 
 | Skill              | Intent keywords                           | Pipeline                                       |
 | ------------------ | ----------------------------------------- | ---------------------------------------------- |
-| workflows:bugfix   | fix, bug, issue, error, 修复              | understand→debug→coding→test→commit→pr         |
-| workflows:feature  | add, new feature, implement, 添加, 新功能 | understand→research→spec→coding→test→commit→pr |
+| workflows:bugfix   | fix, bug, issue, error, 修复              | understand→debug→coding→test→validate→secure→commit→pr         |
+| workflows:feature  | add, new feature, implement, 添加, 新功能 | understand→research→spec→coding→test→validate→secure→cr→commit→pr |
 | workflows:refactor | refactor, clean up, 重构                  | understand→spec→coding→test→commit→pr          |
-| workflows:research | research, investigate, 研究               | understand→research→doc→END                    |
+| workflows:research | research, investigate, 研究               | understand→research→doc→discuss→END            |
 | workflows:minor    | minor, small change, 小改动               | coding→test→commit                             |
 
 
